@@ -22,7 +22,18 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		System.out.println("START configure " + CONTACT);
+		
+		// Authenticate all requests - Basic Authentication 
+		/*
+		http.authorizeHttpRequests().anyRequest().authenticated()
+		.and()
+		.formLogin()
+		.and()
+		.httpBasic();
+		*/
+		
+		// Custom authentication for some requests
+		
 		http.authorizeHttpRequests()
 		.antMatchers(ACCOUNT).authenticated()
 		.antMatchers(BALANCE).authenticated()
@@ -33,6 +44,27 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 		.formLogin()
 		.and()
 		.httpBasic();
+		
+		
+		// Deny any request
+		//  "status": 403
+	    // "error"  : "Forbidden"
+		/*
+		http.authorizeHttpRequests().anyRequest().denyAll()
+		.and()
+		.formLogin()
+		.and()
+		.httpBasic();
+		*/
+		
+		// Permit all Requests
+		/*
+		http.authorizeHttpRequests().anyRequest().permitAll()
+		.and()
+		.formLogin()
+		.and()
+		.httpBasic();
+		*/
 	}
 
 }
