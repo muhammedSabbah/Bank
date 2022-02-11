@@ -15,7 +15,9 @@
 	<name>bank</name>
 	<description>Create a bank project.</description>
 	<properties>
-		<java.version>11</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -32,11 +34,28 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.ejb/javax.ejb-api -->
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>javax.ejb-api</artifactId>
+			<version>3.2</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>com.module.manager</groupId>
 			<artifactId>base-component</artifactId>
 			<version>1.0.0.0-SNAPSHOT</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.module.manager</groupId>
+			<artifactId>data-access</artifactId>
+			<version>1.0.0.0-SNAPSHOT</version>
+			<type>ejb-client</type>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
