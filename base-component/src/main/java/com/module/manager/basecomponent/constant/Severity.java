@@ -1,6 +1,6 @@
 package com.module.manager.basecomponent.constant;
 
-public enum SeverityType {
+public enum Severity {
 	FATAL("FATAL"),
 	ERROR("ERROR"),
 	WARNING("WARNING"),
@@ -9,7 +9,7 @@ public enum SeverityType {
 	
 	private String value;
 	
-	SeverityType(String value) {
+	Severity(String value) {
 		this.value = value;
 	}
 	
@@ -17,8 +17,8 @@ public enum SeverityType {
 		return this.value;
 	}
 	
-	public static SeverityType fromValue(String value) {
-		for(SeverityType c : SeverityType.values()) {
+	public static Severity fromValue(String value) {
+		for(Severity c : Severity.values()) {
 			if(c.value.equals(value)) {
 				return c;
 			}

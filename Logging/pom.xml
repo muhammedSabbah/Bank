@@ -4,30 +4,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.module.manager</groupId>
-	<artifactId>base-component</artifactId>
+	<artifactId>logging-core</artifactId>
 	<version>1.0.0.0-SNAPSHOT</version>
-	<name>base-component</name>
-	<description>Base Component</description>
+	<name>Logging</name>
+	<description>logging</description>
+	<packaging>jar</packaging>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<java.version>1.8</java.version>
 	</properties>
-	<packaging>jar</packaging>
 	<dependencies>
 
-		<dependency>
-			<groupId>com.woody.boot.logging</groupId>
-			<artifactId>logging-core</artifactId>
-			<version>1.0.0.0-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13.2</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 </project>

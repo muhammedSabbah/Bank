@@ -2,7 +2,7 @@ package com.module.manager.basecomponent.exceptions;
 
 import java.text.MessageFormat;
 
-import com.module.manager.basecomponent.constant.SeverityType;
+import com.module.manager.basecomponent.constant.Severity;
 import com.module.manager.basecomponent.constant.StatusCode;
 
 public class BaseSystemException extends Exception {
@@ -11,7 +11,7 @@ public class BaseSystemException extends Exception {
 	private static final String UNKNOWN_ERROR = "Unknown Error Occured";
 	
 	private int errorCode;
-	private SeverityType severityType;
+	private Severity severity;
 	private Object[] parameters;
 	
 	@Deprecated
@@ -19,7 +19,7 @@ public class BaseSystemException extends Exception {
 		super(message, reason);
 		setErrorCode(errorCode);
 		if (severity != null) {
-			setSeverityType(SeverityType.fromValue(severity));
+			setSeverityType(Severity.fromValue(severity));
 		}
 		if (reason != null) {
 			setStackTrace(reason.getStackTrace());
@@ -27,7 +27,7 @@ public class BaseSystemException extends Exception {
 	}
 	
 	public BaseSystemException(String message, StatusCode statusCode) {
-		this(message, statusCode.getCode(), statusCode.getSeverityType().value(), null);
+		this(message, statusCode.getCode(), statusCode.getSeverity().value(), null);
 	}
 	
 	public BaseSystemException(StatusCode statusCode) {
@@ -46,23 +46,23 @@ public class BaseSystemException extends Exception {
 		super(buildMessage(statusCode, reason, parameters));
 		if (statusCode != null) {
 			this.setErrorCode(statusCode.getCode());
-			this.setSeverityType(statusCode.getSeverityType());
+			this.setSeverityType(statusCode.getSeverity());
 		} else {
 			this.setErrorCode(GENERAL_ERROR_CODE);
-			this.setSeverityType(SeverityType.FATAL);
+			this.setSeverityType(Severity.FATAL);
 		}
 		setParameters(parameters);
 	}
 	
 	private static String buildMessage(StatusCode statusCode, Throwable reason, Object[] parameters) {
 		if (statusCode == null) {
-			return buildMessage(SeverityType.FATAL, GENERAL_ERROR_CODE, UNKNOWN_ERROR, reason, parameters);
+			return buildMessage(Severity.FATAL, GENERAL_ERROR_CODE, UNKNOWN_ERROR, reason, parameters);
 		}
-		return buildMessage(statusCode.getSeverityType(), statusCode.getCode(), statusCode.getDescription(), reason,
+		return buildMessage(statusCode.getSeverity(), statusCode.getCode(), statusCode.getDescription(), reason,
 				parameters);
 	}
 	
-	private static String buildMessage(SeverityType severityType, int code, String description, Throwable reason, Object[] parameters) {
+	private static String buildMessage(Severity severityType, int code, String description, Throwable reason, Object[] parameters) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(severityType);
 		stringBuffer.append(":");
@@ -89,12 +89,12 @@ public class BaseSystemException extends Exception {
 		this.errorCode = errorCode;
 	}
 
-	public SeverityType getSeverityType() {
-		return severityType;
+	public Severity getSeverityType() {
+		return severity;
 	}
 
-	public void setSeverityType(SeverityType severityType) {
-		this.severityType = severityType;
+	public void setSeverityType(Severity severityType) {
+		this.severity = severityType;
 	}
 
 	public Object[] getParameters() {
