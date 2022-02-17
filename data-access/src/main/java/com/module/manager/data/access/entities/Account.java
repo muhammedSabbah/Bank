@@ -27,6 +27,9 @@ public class Account implements Serializable{
 	@Column(name = "USERNAME")
 	private String username;
 	
+	@Column(name = "AUTHORITIES")
+	private String authorities;
+	
 	@Column(name = "ENABLED")
 	private boolean enabled;
 
@@ -54,6 +57,14 @@ public class Account implements Serializable{
 		this.username = username;
 	}
 
+	public String getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(String authorities) {
+		this.authorities = authorities;
+	}
+
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -61,6 +72,19 @@ public class Account implements Serializable{
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getClass().getName()).append("[");
+		sb.append("Key=").append(this.key).append(",");
+		sb.append("password=").append(this.password).append(",");
+		sb.append("username=").append(this.username).append(",");
+		sb.append("authorities=").append(this.authorities).append(",");
+		sb.append("enabled=").append(this.enabled).append("]");
+		return sb.toString();
+	}
+	
 	
 	
 }

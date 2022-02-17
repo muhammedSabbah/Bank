@@ -1,7 +1,5 @@
 package com.bytes.bank.controller;
 
-import javax.ejb.EJB;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +25,7 @@ public class AccountController extends BaseComponent{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		getLogger().info("Account - " + account.getKey() + ", " + account.getUsername());
+		getLogger().info("Account - " + account.toString());
 		return "MY ACCOUNT";
 	}
 	
