@@ -25,9 +25,11 @@ public class DBUserDetailsManager implements UserDetailsService{
 		} catch (BaseSystemException e) {
 			throw new UsernameNotFoundException(username);
 		}
-		System.out.println("START");
-		System.out.println(account.toString());
-		System.out.println("ACCOUNT");
+		
+		if(account == null) {
+			throw new UsernameNotFoundException(username);
+		}
+		
 		return User.withUsername(account.getUsername()).password(account.getPassword()).authorities(account.getAuthorities()).build();
 	}
 
