@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -21,6 +23,8 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 	private String NOTICES;
 	@Value("${app.url.base.myAccount}")
 	private String ACCOUNT;
+	@Value("${app.url.base.newAccount}")
+	private String NEW_ACCOUNT;
 	@Value("${app.url.base.myBalance}")
 	private String BALANCE;
 	@Value("${app.url.base.myCards}")
@@ -73,6 +77,7 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 		.antMatchers(ACCOUNT).authenticated()
 		.antMatchers(BALANCE).authenticated()
 		.antMatchers(CARDS).authenticated()
+		.antMatchers(NEW_ACCOUNT).authenticated()
 		.antMatchers(NOTICES).permitAll()
 		.antMatchers(CONTACT).permitAll()
 		.and()
@@ -101,5 +106,24 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 		.httpBasic();
 		*/
 	}
+	
+	 @Override
+	    public void configure(WebSecurity webSecurity) throws Exception {
+	        webSecurity
+	            .ignoring()
+	            .antMatchers(
+	                HttpMethod.POST
+	            )
+	            .antMatchers(HttpMethod.OPTIONS, "/**")
+	            .and()
+	            .ignoring()
+	            .antMatchers(
+	                HttpMethod.GET,
+	                "/" //Other Stuff You want to Ignore
+	            )
+	            .and()
+	            .ignoring()
+	            .antMatchers("/h2");//Should not be in Production!
+	    }
 
 }

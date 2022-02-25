@@ -1,7 +1,11 @@
 package com.bytes.bank.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.module.manager.basecomponent.BaseComponent;
@@ -29,4 +33,14 @@ public class AccountController extends BaseComponent{
 		return "MY ACCOUNT";
 	}
 	
+	@PostMapping("${app.url.base.newAccount}")
+	public ResponseEntity<Account> createNewAccount(@RequestBody Account account) {
+		Account result = null;
+		try {
+			result = accountFacadeLocal.createNewAccount(account);
+		} catch (BaseSystemException e) {
+			e.printStackTrace();
+		}
+		return ResponseEntity.ok(result);
+	}
 }

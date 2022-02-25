@@ -14,6 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>bank</name>
 	<description>Create a bank project.</description>
+	<packaging>war</packaging>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -53,7 +54,6 @@
 			<groupId>com.module.manager</groupId>
 			<artifactId>data-access</artifactId>
 			<version>1.0.0.0-SNAPSHOT</version>
-			<type>ejb-client</type>
 		</dependency>
 
 		<dependency>
