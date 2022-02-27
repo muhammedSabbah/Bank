@@ -1,5 +1,9 @@
 package com.bytes.bank.config;
 
+import java.util.Collections;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
@@ -73,7 +79,22 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 		
 		// Custom authentication for some requests
 		
-		http.authorizeHttpRequests()
+		http
+		.cors().configurationSource(new CorsConfigurationSource() {
+			
+			@Override
+			public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+				CorsConfiguration configuration = new CorsConfiguration();
+				configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+				configuration.setAllowedMethods(Collections.singletonList("*"));
+				configuration.setAllowCredentials(true);
+				configuration.setAllowedHeaders(Collections.singletonList("*"));
+				configuration.setMaxAge(3600L);
+				return configuration;
+			}
+		})
+		.and()
+		.authorizeHttpRequests()
 		.antMatchers(ACCOUNT).authenticated()
 		.antMatchers(BALANCE).authenticated()
 		.antMatchers(CARDS).authenticated()
