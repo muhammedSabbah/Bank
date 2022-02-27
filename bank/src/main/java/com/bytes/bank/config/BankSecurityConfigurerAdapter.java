@@ -93,7 +93,7 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 				return configuration;
 			}
 		})
-		.and()
+		.and().csrf().disable()
 		.authorizeHttpRequests()
 		.antMatchers(ACCOUNT).authenticated()
 		.antMatchers(BALANCE).authenticated()
