@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.module.manager.basecomponent.exceptions.BaseSystemException;
 import com.module.manager.data.access.entities.Account;
+import com.module.manager.data.access.entities.Authority;
 import com.module.manager.data.access.view.AccountFacadeLocal;
 
 @Component
@@ -74,7 +75,12 @@ public class BankAuthenticationProvider implements AuthenticationProvider {
 		if (account == null) {
 			throw new UsernameNotFoundException("UserDetailsService returned null, which is an interface contract violation");
 		}
-		return User.withUsername(account.getUsername()).password(account.getPassword()).authorities(account.getAuthorities()).build();
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		for(Authority item : account.getAuthorities()) {
+			System.out.println("Autho " + item);
+			authorities.add(new SimpleGrantedAuthority(item.getValue()));
+		}
+		return User.withUsername(account.getUsername()).password(account.getPassword()).authorities(authorities).build();
 	}
 	
 	protected void additionalAuthenticationChecks(UserDetails userDetails,UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {

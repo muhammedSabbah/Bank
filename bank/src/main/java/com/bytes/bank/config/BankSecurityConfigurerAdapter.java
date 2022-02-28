@@ -102,7 +102,7 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 		.antMatchers(ACCOUNT).authenticated()
 		.antMatchers(BALANCE).authenticated()
 		.antMatchers(CARDS).authenticated()
-		.antMatchers(NEW_ACCOUNT).authenticated()
+		.antMatchers(NEW_ACCOUNT).permitAll()
 		.antMatchers(NEW_BALANCE).authenticated()
 		.antMatchers(NOTICES).permitAll()
 		.antMatchers(CONTACT).permitAll()
