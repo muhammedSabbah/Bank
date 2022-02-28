@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -33,6 +34,8 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 	private String NEW_ACCOUNT;
 	@Value("${app.url.base.myBalance}")
 	private String BALANCE;
+	@Value("${app.url.base.newBalance}")
+	private String NEW_BALANCE;
 	@Value("${app.url.base.myCards}")
 	private String CARDS;
 	/*
@@ -93,16 +96,16 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 				return configuration;
 			}
 		})
-		.and().csrf().disable()
+		.and().csrf().ignoringAntMatchers(NEW_ACCOUNT).csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+		.and()
 		.authorizeHttpRequests()
 		.antMatchers(ACCOUNT).authenticated()
 		.antMatchers(BALANCE).authenticated()
 		.antMatchers(CARDS).authenticated()
 		.antMatchers(NEW_ACCOUNT).authenticated()
+		.antMatchers(NEW_BALANCE).authenticated()
 		.antMatchers(NOTICES).permitAll()
 		.antMatchers(CONTACT).permitAll()
-		.and()
-		.formLogin()
 		.and()
 		.httpBasic();
 		
@@ -127,24 +130,14 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 		.httpBasic();
 		*/
 	}
-	
+	/*
 	 @Override
 	    public void configure(WebSecurity webSecurity) throws Exception {
 	        webSecurity
 	            .ignoring()
 	            .antMatchers(
-	                HttpMethod.POST
-	            )
-	            .antMatchers(HttpMethod.OPTIONS, "/**")
-	            .and()
-	            .ignoring()
-	            .antMatchers(
-	                HttpMethod.GET,
-	                "/" //Other Stuff You want to Ignore
-	            )
-	            .and()
-	            .ignoring()
-	            .antMatchers("/h2");//Should not be in Production!
+	            		NEW_ACCOUNT
+	            );
 	    }
-
+*/
 }
