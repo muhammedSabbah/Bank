@@ -1,5 +1,6 @@
 package com.bytes.bank.config;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +12,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -82,6 +83,8 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 		// Custom authentication for some requests
 		
 		http
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
 		.cors().configurationSource(new CorsConfigurationSource() {
 			
 			@Override
@@ -91,14 +94,15 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 				configuration.setAllowedMethods(Collections.singletonList("*"));
 				configuration.setAllowCredentials(true);
 				configuration.setAllowedHeaders(Collections.singletonList("*"));
+				configuration.setExposedHeaders(Arrays.asList());
 				configuration.setMaxAge(3600L);
 				return configuration;
 			}
 		})
-		.and().csrf().ignoringAntMatchers(NEW_ACCOUNT).csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-		.and()
-		.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
-		.addFilterAfter(new AuthoritiesLoggingFilter(), BasicAuthenticationFilter.class)
+		.and().csrf().disable()
+		.addFilterAfter(new JsonWebTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+		//.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+		//.addFilterAfter(new AuthoritiesLoggingFilter(), BasicAuthenticationFilter.class)
 		.authorizeRequests()
 		.antMatchers(HttpMethod.GET, ACCOUNT).hasAuthority("USER")
 		.antMatchers(BALANCE).authenticated()

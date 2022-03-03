@@ -38,7 +38,7 @@ public class BankAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		System.out.println("START AUTH");
+		System.out.println("START AUTH---------------------------------------");
 		String username = determineUsername(authentication);
 		UserDetails user;
 		try {
