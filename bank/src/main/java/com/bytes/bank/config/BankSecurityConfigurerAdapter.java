@@ -98,6 +98,7 @@ public class BankSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
 		.and().csrf().ignoringAntMatchers(NEW_ACCOUNT).csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 		.and()
 		.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+		.addFilterAfter(new AuthoritiesLoggingFilter(), BasicAuthenticationFilter.class)
 		.authorizeRequests()
 		.antMatchers(HttpMethod.GET, ACCOUNT).hasAuthority("USER")
 		.antMatchers(BALANCE).authenticated()
