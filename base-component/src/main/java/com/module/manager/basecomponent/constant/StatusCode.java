@@ -8,6 +8,7 @@ public enum StatusCode {
 	INALID_DB_ACTION(1002, "{0}", Severity.ERROR),
 	INTERNAL_SYSTEM_ERROR(99999, "Internal System Error", Severity.FATAL),
 	ENTITY_ALREADY_EXIST(99925, "Entity already exist in DB", Severity.FATAL),
+	INVALED_ENTITY(99926, "Inalid Entiry", Severity.FATAL),
 	INVALID_ENTITY(99924, "Non Entity passed to ORM.", Severity.FATAL),
 	TRANSACTION_MISSING(99999, "Query {0} Requires Transaction while There is none.", Severity.ERROR),
 	QUERY_NAME_NOT_FOUND(99999, "Query {0} not found.", Severity.ERROR);

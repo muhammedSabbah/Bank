@@ -22,6 +22,12 @@ public class AccountFacade extends AbstractFacade<Account> implements AccountFac
 	}
 
 	@Override
+	public Account createNewAccount(Object newAccount) throws BaseSystemException {
+		Account account = (Account) newAccount;
+		return this.create(account);
+	}
+	
+	@Override
 	public Account loadUserByUserName(String username) throws BaseSystemException{
 		Account account = null;
 		if(username != null) {
