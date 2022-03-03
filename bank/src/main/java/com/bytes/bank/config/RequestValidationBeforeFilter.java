@@ -31,6 +31,7 @@ public class RequestValidationBeforeFilter implements Filter{
 			header = header.trim();
 			if(StringUtils.startsWithIgnoreCase(header, AUTHENTICATION_SCHEME_BASIC)) {
 				byte[] base64Token = header.substring(6).getBytes(StandardCharsets.UTF_8);
+				System.out.println("encoded =  " + base64Token);
 				byte[] decoded;
 				try {
 					decoded = Base64.getDecoder().decode(base64Token);
